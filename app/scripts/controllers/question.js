@@ -18,6 +18,7 @@ angular.module('quizApp')
     self.points = 0;
 
     self.submitQuestion = function() {
+      console.log('working');
       // push the newly created question and its options
       self.quiz.push(self.nextQuestion);
       // zero out nextQuestion by making a new blank one
@@ -27,6 +28,7 @@ angular.module('quizApp')
     };
 
 	self.checkAnswer = function(question, val) {
+    console.log('negative');
       // check if the given val matches the answer
       if (!question.answered) {
         question.answered = true;
@@ -34,8 +36,10 @@ angular.module('quizApp')
           self.points += 10;
         } else {
           self.points -= 10;
+
         }
       }
+      //$emit(self.points);
     };
 
     self.test = 'test';
