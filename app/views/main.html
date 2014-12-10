@@ -14,34 +14,42 @@
   </div>
 </div>
 
-<div ng-controller="QuizCtrl as quiz" class="container">
-  <div>
-    {{ $scope }}
+<div ng-controller="QuizCtrl as quiz" data-ng-init="quiz.startTimer()" class="container">
+  <div class="container">
+    <form>
+    <h3>Quiz Timer: {{ quiz.counter }} </h3>
+    <button class="btn btn-default" ng-click="quiz.startTimer()">Start</button>
+    <button class="btn btn-default" ng-click="quiz.cancelTimer()">Stop</button>
+    <button class="btn btn-default" ng-click="quiz.resetTimer()">Reset</button>
+    <form>
   </div>
-  <div class="jumbotron question">
-    <form ng-submit="quiz.submitQuestion()">
+  <div ng-controller="QuestionCtrl as question" class="jumbotron question">
+    <form ng-submit="question.submitQuestion()">
     <h2>Insert Question Here</h2>
     <h2> {{ test.text }} </h2>
-      <input type="text" ng-model="quiz.nextQuestion.q">
+      <input type="text" ng-model="question.nextQuestion.q">
       <ul id='question-list'>
-        <li ng-repeat="option in quiz.nextQuestion.options">
-          <input type="radio" name="correct" ng-model="quiz.nextQuestion.answer" ng-value="option.value">
+        <li ng-repeat="option in question.nextQuestion.options">
+          <input type="radio" name="correct" ng-model="question.nextQuestion.answer" ng-value="option.value">
           <input type="text" ng-model="option.value">
         </li>
       </ul>
+
+      <h1>{{ question.test }}</h1>
+
       <div>
-        <input type="number" ng-model="quiz.nextQuestion.difficulty">
+        <input type="number" ng-model="question.nextQuestion.difficulty">
       </div>
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>
   </div>
-  <h4>Score: {{ points }}</h4>
+  <h4>Score: {{ question.points }}</h4>
   <ul>
-    <li ng-repeat="question in quiz.quiz | orderBy: 'difficulty'">
+    <li ng-repeat="question in question.quiz | orderBy: 'difficulty'">
       <h4>Question {{ $index + 1 }}</h4>
       <strong>{{ question.q }}</strong>
       <div ng-repeat="option in question.options">
-        <button class="btn btn-default" ng-click="quiz.checkAnswer(question, option.value)">
+        <button class="btn btn-default" ng-click="question.checkAnswer(question, option.value)">
           {{ option.value }}
         </button>
       </div>
