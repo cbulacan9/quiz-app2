@@ -8,14 +8,42 @@
  * Controller of the quizApp
  */
 angular.module('quizApp')
-  .controller('QuestionCtrl', function ($scope) {
+  .controller('QuestionCtrl', function ($scope, $http) {
     self = this;
+
+    $http.get('http://localhost:3000/questions').success(function(questions){
+      var quizArray = [];
+      questions.forEach(function(question){
+      var holderObj ={};
+      holderObj.q = question.question;
+      holderObj.answer = question.answer;
+      holderObj.difficulty = question.difficulty;
+      holderObj.options = [];
+      for(var i = 0; i< question.ops.length; i++){
+        var otherObj = {};
+        otherObj = question.ops[i];
+        holderObj.options.push(otherObj);
+      }
+      console.log(quizArray);
+      quizArray.push(holderObj);
+      holderObj= {};
+    });
+      self.quiz = quizArray;
+    });
 
     self.nextQuestion = {
       q: "",
       options: [{}, {}],
       answer: ""
     };
+
+    self.deleteQuestion= function(questionText, index){
+      console.log(index);
+      self.quiz.splice(index, 1);
+      console.log(self.quiz);
+
+      $http.post('http://localhost:3000/deleteQuestion', {question: questionText});
+    }
 
     self.addOption = function(){
       self.nextQuestion.options.push({});
@@ -31,6 +59,9 @@ angular.module('quizApp')
       console.log('working');
       // push the newly created question and its options
       self.quiz.push(self.nextQuestion);
+      //ajax post to server route with self.nextQuestion as req.body
+      $http.post('http://localhost:3000/newQuestion', {question: self.nextQuestion});
+
       // zero out nextQuestion by making a new blank one
       self.nextQuestion = {
         q: "",
@@ -61,34 +92,5 @@ angular.module('quizApp')
 
     self.test = 'test';
 
-    self.quiz = [
-      {
-        "q": 'Who is the best ping pong player at FSA?',
-        'options': [{ 'value': "Mike"} , { 'value': 'Eddie'} , {'value' : 'Nimit'} , { 'value': 'Patrick'}],
-        'answer': "Nimit",
-        'difficulty': 8,
-        'answered': false
-      },
-      { "q": "Which robot name was chanted during Lego Mindstorms?",
-      'options':[{ 'value': 'infiniteLoop'} , { 'value': 'noHope.js'} , {'value' : 'johnny5'} , { 'value': 'none of the above'}],
-      'answer':'noHope.js',
-      'difficulty': 5,
-      'answered': false
-    },
-    {
-      'q': 'Out of the following frontend frameworks, which framework is most rails-like',
-      'options':[{ 'value': 'Ember.js'} ,{ 'value': 'Angular.js'} , {'value' : 'Backbone.js'} , { 'value': 'Meteor.js'}],
-      'answer':'Ember.js',
-      'difficulty': 1,
-      'answered': false
-    },
-    {
-      'q': "Which project used a local data store?",
-      'options':[{ 'value': 'TripPlanner'} ,{ 'value': 'Twitter.js'} , {'value' : 'WikiWalker'} , { 'value': 'WikiStack'}],
-      'answer':'Twitter.js',
-      'difficulty': 7,
-      'answered': false
-    }
-    ];
 
   });

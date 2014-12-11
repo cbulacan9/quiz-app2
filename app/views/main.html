@@ -58,14 +58,18 @@
         <br>
         <ul>
             <li ng-repeat="quest in question.quiz | orderBy: 'difficulty'">
+              <button type="button" class="btn btn-danger btn-sm" ng-click = "question.deleteQuestion(quest.q, $index)">X</button>
+
                 <h4>Question {{ $index + 1 }}</h4>
                 <strong>{{ quest.q }}</strong>
                 <div ng-repeat="option in quest.options">
                     <button class="btn btn-default" ng-click="question.checkAnswer(quest, option.value)">
                         {{ option.value }}
                     </button>
+                    <br>
                 </div>
                 <br>
+
             </li>
         </ul>
     </div>
