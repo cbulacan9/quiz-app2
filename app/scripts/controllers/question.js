@@ -8,12 +8,21 @@
  * Controller of the quizApp
  */
 angular.module('quizApp')
-  .controller('QuestionCtrl', function () {
+  .controller('QuestionCtrl', function ($scope) {
     self = this;
 
     self.nextQuestion = {
-      options: [{}, {}, {}, {}]
+      q: "",
+      options: []
     };
+
+    self.addOption = function(){
+      self.nextQuestion.options.push({});
+    }
+    self.deleteOption = function(optionIndex){
+      self.nextQuestion.options.splice(optionIndex, 1);
+
+    }
 
     self.points = 0;
 
@@ -41,6 +50,11 @@ angular.module('quizApp')
       }
       //$emit(self.points);
     };
+
+    $scope.$watchCollection('nextQuestion.options', function(){
+      console.log("Watch Collection is working")
+    });
+
 
     self.test = 'test';
 

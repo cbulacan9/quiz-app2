@@ -15,22 +15,23 @@ angular.module('quizApp')
 
     self.counter = startTime;
 
-    self.cancelTimer = function() {
-      $interval.cancel(self.timer);
-    };
-
-    self.resetTimer = function() {
-      self.counter = startTime;
-    };
-
-    self.startTimer = function() {
-      self.timer = $interval(function(){
-        --self.counter;
-        if (self.counter == 0) {
-          $interval.cancel(self.timer);
-          alert('Times Up!')
-        }
-      }, 1000)
-    };
+    // working timer functions - turned off for development
+    // self.cancelTimer = function() {
+    //   $interval.cancel(self.timer);
+    // };
+    //
+    // self.resetTimer = function() {
+    //   self.counter = startTime;
+    // };
+    //
+    // self.startTimer = function() {
+    //   self.timer = $interval(function(){
+    //     --self.counter;
+    //     if (self.counter == 0) {
+    //       $interval.cancel(self.timer);
+    //       alert('Times Up!')
+    //     }
+    //   }, 1000)
+    // };
 
   });

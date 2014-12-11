@@ -13,7 +13,8 @@ angular
   .module('quizApp', [
     'ngCookies',
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'ui.utils'
   ])
   .config(function ($routeProvider) {
     $routeProvider
