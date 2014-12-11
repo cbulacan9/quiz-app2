@@ -16,7 +16,7 @@ angular.module('quizApp')
     ];
 
     $scope.minQuestionLength = function(question){
-      return(question.length >= 10)
+      return(typeof question !== "undefined" && question.length >= 10)
     }
 
     $scope.minOptions = function(question){
@@ -24,7 +24,7 @@ angular.module('quizApp')
         return(question.options.length>1)
     }
 
-    
+
 
     $scope.test = {text: "I work"}
   });

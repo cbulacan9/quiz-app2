@@ -13,7 +13,8 @@ angular.module('quizApp')
 
     self.nextQuestion = {
       q: "",
-      options: []
+      options: [{}, {}],
+      answer: ""
     };
 
     self.addOption = function(){
@@ -32,7 +33,9 @@ angular.module('quizApp')
       self.quiz.push(self.nextQuestion);
       // zero out nextQuestion by making a new blank one
       self.nextQuestion = {
-        options: [{}, {}, {}, {}]
+        q: "",
+        options: [{}, {}],
+        answer: ""
       };
     };
 
@@ -51,8 +54,8 @@ angular.module('quizApp')
       //$emit(self.points);
     };
 
-    $scope.$watchCollection('nextQuestion.options', function(){
-      console.log("Watch Collection is working")
+    $scope.$watchCollection('question.nextQuestion.options', function(newval, oldval){
+      $scope.newQuestionForm.$setValidity("num-options", newval.length > 1);
     });
 
 
