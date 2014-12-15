@@ -25,9 +25,6 @@ router.post('/deleteQuestion', function(req, res) {
   });
 });
 
-
-
-
 router.post('/newQuestion', function(req, res) {
   var ques = req.body.question;
   model.Question.create({question: ques.q, ops: ques.options, answer: ques.answer, difficulty: ques.difficulty}, function(err, newQUestion){
@@ -36,6 +33,5 @@ router.post('/newQuestion', function(req, res) {
   });
   //mongoose create with question object
 });
-
 
 module.exports = router;
